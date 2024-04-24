@@ -55,10 +55,11 @@ model = MyModel()
 model.load_state_dict(torch.load('./model.pth', map_location=torch.device('cpu')))
 model.to(device)
 
-def classify_image(image):
-    img = image.convert('RGB')       
+def classify_image(img):
+    img = img.convert('RGB')       
     img = transform(img).unsqueeze(0)
     pred = model(img).argmax(dim=1)
     return reverse_mapping[pred.item()]
 
-classify_image()
+image = Image.open("./media/truck.png")
+print(classify_image(image))

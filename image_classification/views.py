@@ -7,7 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 from io import BytesIO
 import base64
-from ..inference import classify_image
+import sys
+sys.path.append("..")
+from inference import classify_image
 
 
 def classification_image(request):
@@ -28,16 +30,17 @@ def classification_image(request):
 def get_class_name_view(request):
     if request.method == 'POST':
         # Get the image data from the POST request
-        image_data = request.POST.get('image_data')
+        img_data = request.POST.get('image_data')
 
         # Process the image data and obtain the class name
         # Replace this with your actual logic to classify the image
-        image_data = image_data.split(',')[1]
-        image_data = BytesIO(base64.b64decode(image_data))
-        class_name = classify_image(image_data)
+        image_data = img_data.split(',')[1]
+        image = BytesIO(base64.b64decode(image_data))
+        image = Image.open(image)
+        class_name = classify_image(image)
 
         # Return the class name in JSON format
-        return JsonResponse({'class_name': class_name, 'image_data': image_data})
+        return JsonResponse({'class_name': class_name, 'image_data': img_data})
 
     # Return an error response if the request method is not POST
     return JsonResponse({'error': 'Invalid request'})
