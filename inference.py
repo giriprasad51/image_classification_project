@@ -10,9 +10,7 @@ import os
 import random
 import numpy as np
 import pandas as pd
-# import matplotlib.pyplot as plt
-# from torch.optim.lr_scheduler import StepLR
-from tqdm import tqdm
+
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -62,3 +60,5 @@ def classify_image(image):
     img = transform(img).unsqueeze(0)
     pred = model(img).argmax(dim=1)
     return reverse_mapping[pred.item()]
+
+classify_image()
