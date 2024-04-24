@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Classification With Transformers</title>
+    <style>
+      #image-container {
+        width: 500px;
+        height: 350px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        background-size: cover;
+        background-repeat: no-repeat;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1 style="text-align: center">Image Classification With Transformers</h1>
+    <br />
+    <div id="image-container">
+      {% if image_url %}
+      <img src="{{ image_url }}" alt="Uploaded Image" style="display: none" />
+      {% else %}
+      <p>Click to upload an image</p>
+      {% endif %}
+      <input type="file" id="image-upload" style="display: none" />
+    </div>
+
+    <div id="class-container">
+      <!-- Class name will be displayed here -->
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const imageContainer = document.getElementById("image-container");
+        const imageInput = document.getElementById("image-upload");
+        const classContainer = document.getElementById("class-container");
+
+        imageContainer.addEventListener("click", function () {
+          imageInput.click();
+        });
+
+        imageInput.addEventListener("change", function () {
+          const file = this.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const imageDataUrl = e.target.result;
+              imageContainer.style.backgroundImage =
+                "url('" + imageDataUrl + "')";
+                console.log(imageDataUrl);
+                console.log("--------------------------------")
+                $.ajax({
+                    url: "/get_class_name/",
+                    type: "POST",
+                    data: {
+                        "image_data": imageDataUrl
+                    },
+                    success: function (response) {
+                        classContainer.innerHTML = "<p>Class Name: " + response.class_name + "</p>";
+                    },
+                    error: function () {
+                        console.log("Error occurred while fetching class name.");
+                    }
+                });
+                
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
