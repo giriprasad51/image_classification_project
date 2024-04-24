@@ -13,7 +13,6 @@ import pandas as pd
 # import matplotlib.pyplot as plt
 # from torch.optim.lr_scheduler import StepLR
 from tqdm import tqdm
-%matplotlib inline
 
 import warnings
 warnings.filterwarnings("ignore")
