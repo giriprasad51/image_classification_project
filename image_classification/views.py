@@ -4,7 +4,11 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .tem import classify_image
+from PIL import Image
+from io import BytesIO
+import base64
+from ..inference import classify_image
+
 
 def classification_image(request):
     if request.method == 'POST' and request.FILES.get('image'):
@@ -28,6 +32,8 @@ def get_class_name_view(request):
 
         # Process the image data and obtain the class name
         # Replace this with your actual logic to classify the image
+        image_data = image_data.split(',')[1]
+        image_data = BytesIO(base64.b64decode(image_data))
         class_name = classify_image(image_data)
 
         # Return the class name in JSON format

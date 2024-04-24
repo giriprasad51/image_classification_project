@@ -1,21 +1,36 @@
 
-import torch
 import timm
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torchvision import transforms
+from torchvision import transforms 
+# from torchvision.utils import make_grid
 from PIL import Image
+import os
+import random
+import numpy as np
+import pandas as pd
+# import matplotlib.pyplot as plt
+# from torch.optim.lr_scheduler import StepLR
+from tqdm import tqdm
+%matplotlib inline
+
+import warnings
+warnings.filterwarnings("ignore")
+
+class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+print(class_names)
+print(len(class_names))
+N=list(range(len(class_names)))
+normal_mapping=dict(zip(class_names,N)) 
+reverse_mapping=dict(zip(N,class_names))
+print(normal_mapping,reverse_mapping)
 
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
-img = Image.open(path).convert('RGB')
-class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
-
-if transform is not None:
-    img = transform(img)
 
 class MyModel(nn.Module):
 
@@ -36,10 +51,15 @@ class MyModel(nn.Module):
         #print(x.shape)
         return x
     
-model = MyModel() 
-
 # Check if GPU is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model.eval()
-pred = model(img).argmax(dim=1)
-print(pred)
+# Move model to GPU
+model = MyModel()
+model.load_state_dict(torch.load('./model.pth', map_location=torch.device('cpu')))
+model.to(device)
+
+def classify_image(image):
+    img = image.convert('RGB')       
+    img = transform(img).unsqueeze(0)
+    pred = model(img).argmax(dim=1)
+    return reverse_mapping[pred.item()]
