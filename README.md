@@ -52,3 +52,17 @@ pip install -r requirements.txt
 </body>
 </html>
 
+<table>
+  
+  <tr>
+    <td valign="top"><img src="confusion_matrices\Vit_confusion_matrix.png"></td>
+    <td valign="top"><img src="confusion_matrices\BEiT_confusion_matrix.png"></td>
+    <td valign="top"><img src="confusion_matrices\mobilevit_s_confusion_matrix.png"></td>
+  </tr>
+  <tr>
+    <td>ViT</td>
+     <td>BEiT</td>
+     <td>mobilevit_s</td>
+  </tr>
+ </table>
+
