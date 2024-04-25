@@ -1,17 +1,9 @@
-# Fine-tuning Transformers For Image Classification
-
-| name        | self - supervised                           | initialized checkpoint                                                                                    | crop size | #params | accuracy | Kaggle Notebook                                                                                               |
-| :---------- | :------------------------------------------ | :-------------------------------------------------------------------------------------------------------- | :-------: | :-----: | :------- | :------------------------------------------------------------------------------------------------------------ |
-| ViT | <span style="color:red">[ ✗ ]</span>        | [vit_checkpoint](https://www.kaggle.com/code/giriprasad512/cifar-10-vitforimageclassification/output)             |  224x224  | 85M  | 0.9561   | [cifar-10-mobilevit-s.ipynb](https://www.kaggle.com/code/giriprasad512/cifar-10-vitforimageclassification)
-| BEiT        | <span style="color:lightgreen">[ ✓ ]</span> | [beit_checkpoint](https://www.kaggle.com/code/giriprasad512/cifar-10-by-fine-tuning-beit/output) |  224x224  |   87M   | 0.9505   | [cifar-10-by-fine-tuning-beit.ipynb](https://www.kaggle.com/code/giriprasad512/cifar-10-by-fine-tuning-beit/) | 
-| mobilevit_s | <span style="color:red">[ ✗ ]</span>        | [model.pth](checkpoints/model.pth)             |  224x224  | 5M   | 0.8900   | [cifar-10-mobilevit-s.ipynb](https://www.kaggle.com/code/giriprasad512/cifar-10-mobilevit-s)                  |
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confusion Matrices</title>
+  <title>Transformer-based Image Classification Comparison</title>
   <style>
     .container {
       display: flex;
@@ -21,16 +13,32 @@
     }
     .image-container {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
-      margin-right: 1px;
+      margin-right: 20px;
     }
     .image-container img {
       width: 300px; /* Adjust this value as needed */
-      height: 200px;
+      height: auto;
     }
     .title {
-      margin-left: 5px;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .table-container {
+      margin-top: 50px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
     }
   </style>
 </head>
@@ -38,41 +46,74 @@
 
 <div class="container">
   <div class="image-container">
-    <figure>
-        <img src="confusion_matrices\Vit_confusion_matrix.png" alt="Confusion Matrix 2">
-         <figcaption style="text-align:center;">  ViT </figcaption> 
-    </figure>
+    <img src="confusion_matrices\Vit_confusion_matrix.png" alt="Confusion Matrix for ViT">
+    <p class="title">ViT</p>
   </div>
   <div class="image-container">
-    <figure>
-        <img src="confusion_matrices\BEiT_confusion_matrix.png" alt="Confusion Matrix 1">
-        <figcaption style="text-align:center;"> BEiT </figcaption>
-    </figure> 
+    <img src="confusion_matrices\BEiT_confusion_matrix.png" alt="Confusion Matrix for BEiT">
+    <p class="title">BEiT</p>
   </div>
   <div class="image-container">
-    <figure>
-        <img src="confusion_matrices\mobilevit_s_confusion_matrix.png" alt="Confusion Matrix 2">
-         <figcaption style="text-align:center;">  mobilevit_s </figcaption> 
-    </figure>
+    <img src="confusion_matrices\mobilevit_s_confusion_matrix.png" alt="Confusion Matrix for mobilevit_s">
+    <p class="title">mobilevit_s</p>
   </div>
+</div>
 
+<div class="table-container">
+  <h2>Model Comparison</h2>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Self-supervised</th>
+      <th>Initialized Checkpoint</th>
+      <th>Crop Size</th>
+      <th>#Params</th>
+      <th>Accuracy</th>
+      <th>Kaggle Notebook</th>
+    </tr>
+    <tr>
+      <td>ViT</td>
+      <td>[ ✗ ]</td>
+      <td><a href="https://www.kaggle.com/code/giriprasad512/cifar-10-vitforimageclassification/output">vit_checkpoint</a></td>
+      <td>224x224</td>
+      <td>85M</td>
+      <td>0.9561</td>
+      <td><a href="https://www.kaggle.com/code/giriprasad512/cifar-10-vitforimageclassification">cifar-10-mobilevit-s.ipynb</a></td>
+    </tr>
+    <tr>
+      <td>BEiT</td>
+      <td>[ ✓ ]</td>
+      <td><a href="https://www.kaggle.com/code/giriprasad512/cifar-10-by-fine-tuning-beit/output">beit_checkpoint</a></td>
+      <td>224x224</td>
+      <td>87M</td>
+      <td>0.9505</td>
+      <td><a href="https://www.kaggle.com/code/giriprasad512/cifar-10-by-fine-tuning-beit/">cifar-10-by-fine-tuning-beit.ipynb</a></td>
+    </tr>
+    <tr>
+      <td>mobilevit_s</td>
+      <td>[ ✗ ]</td>
+      <td><a href="checkpoints/model.pth">model.pth</a></td>
+      <td>224x224</td>
+      <td>5M</td>
+      <td>0.8900</td>
+      <td><a href="https://www.kaggle.com/code/giriprasad512/cifar-10-mobilevit-s">cifar-10-mobilevit-s.ipynb</a></td>
+    </tr>
+  </table>
+</div>
+
+<div>
+  <h2>Setup</h2>
+  <p>First, clone the repo and install required packages:</p>
+  <pre><code>!git clone https://github.com/giriprasad51/image_classification_project.git
+cd image_classification_project
+pip install -r requirements.txt</code></pre>
+</div>
+
+<div>
+  <h2>Demo</h2>
+  <!-- <img src="thumnail.png" alt="Video Thumbnail" onclick="window.open('https://github.com/giriprasad51/image_classification_project/blob/main/video.mp4', '_blank')"> -->
+  <img src="gif1.gif" alt="Demo GIF">
 </div>
 
 </body>
 </html>
-
-## Setup
-
-First, clone the repo and install required packages:
-
-```
-!git clone https://github.com/giriprasad51/image_classification_project.git
-cd image_classification_project
-pip install -r requirements.txt
-```
-
-## Demo
-
-<!-- [![Watch the video](thumnail.png)](https://github.com/giriprasad51/image_classification_project/blob/main/video.mp4) -->
-
-![GIF](gif1.gif)
