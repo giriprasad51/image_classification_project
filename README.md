@@ -6,6 +6,21 @@
 | BEiT        | <span style="color:lightgreen"> [ ✓ ] </span> | [beit_checkpoint](https://www.kaggle.com/code/giriprasad512/cifar-10-by-fine-tuning-beit/output) |  224x224  |   87M   | 0.9505   | [cifar-10-by-fine-tuning-beit.ipynb](https://www.kaggle.com/code/giriprasad512/cifar-10-by-fine-tuning-beit/) | 
 | mobilevit_s | <span style="color:red"> [ ✗ ] </span>        | [model.pth](checkpoints/model.pth)             |  224x224  | 5M   | 0.8900   | [cifar-10-mobilevit-s.ipynb](https://www.kaggle.com/code/giriprasad512/cifar-10-mobilevit-s)                  |
 
+## Confusion Matrixs
+
+<table>
+  
+  <tr>
+    <td valign="top"><img src="confusion_matrices\Vit_confusion_matrix.png"></td>
+    <td valign="top"><img src="confusion_matrices\BEiT_confusion_matrix.png"></td>
+    <td valign="top"><img src="confusion_matrices\mobilevit_s_confusion_matrix.png"></td>
+  </tr>
+  <tr>
+    <td> ViT </td>
+     <td> BEiT </td>
+     <td> Vit-s </td>
+  </tr>
+ </table>
 
 ## Setup
 
@@ -23,19 +38,5 @@ pip install -r requirements.txt
 
 ![GIF](gif1.gif)
 
-## Confusion Matrixs
 
-<table>
-  
-  <tr>
-    <td valign="top"><img src="confusion_matrices\Vit_confusion_matrix.png"></td>
-    <td valign="top"><img src="confusion_matrices\BEiT_confusion_matrix.png"></td>
-    <td valign="top"><img src="confusion_matrices\mobilevit_s_confusion_matrix.png"></td>
-  </tr>
-  <tr>
-    <td>ViT</td>
-     <td>BEiT</td>
-     <td>Vit-s</td>
-  </tr>
- </table>
 
